@@ -181,6 +181,22 @@ plt.show()
 # You are given a dictionary of prices for different products.
 prices = {'A': 50, 'B': 75, 'C': 'unknown', 'D': 30}
 
+def calculate_total_price(price_dict):
+
+    total = 0
+    for product, price in price_dict.items():
+        try:
+            # Attempt to convert the price to float
+            total += float(price)
+        except (ValueError, TypeError):
+            # If conversion fails (e.g., price is 'unknown'), skip this item
+            print(f"Skipping non-numeric price for product '{product}': {price}")
+    return total
+
+# Call the function and display the total price
+total_price = calculate_total_price(prices)
+print("Total Price:", total_price)
+
 # Write a function to calculate the total price of all items, handling any non-numeric values by skipping them.
 # Include error handling in your function and explain where and why it’s needed.
 
