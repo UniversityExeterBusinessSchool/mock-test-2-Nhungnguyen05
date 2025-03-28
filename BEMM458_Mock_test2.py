@@ -21,6 +21,28 @@
 # Question 1 - Loops and Lists
 # You are given a list of numbers representing weekly sales in units.
 weekly_sales = [120, 85, 100, 90, 110, 95, 130]
+# Calculate the average sales by dividing the total sales by the number of weeks
+average_sales = sum(weekly_sales) / len(weekly_sales)
+# Print the average sales for the period
+print("Average sales:", average_sales)  # Display the calculated average sales
+
+# Loop through each week's sales in the list
+for sale in weekly_sales:
+    # Check if the current week's sale is greater than the average sales
+    if sale > average_sales:
+        print(sale, "is above average sales")  # Print that the sale is above average
+    else:
+        print(sale, "is below average sales")  # Print that the sale is below average
+# Output:
+#Average sales: 104.28571428571429
+#120 is above average sales
+#85 is below average sales
+#100 is below average sales
+#90 is below average sales
+#110 is above average sales
+#95 is below average sales
+#130 is above average sales
+
 
 # Write a for loop that iterates through the list and prints whether each week's sales were above or below the average sales for the period.
 # Calculate and print the average sales.
@@ -33,6 +55,35 @@ customer_feedback = """The product was good but could be improved. I especially 
 
 # Find the first and last occurrence of the words 'good' and 'improved' in the feedback using string methods.
 # Store each position in a list as a tuple (start, end) for both words and print the list.
+# Define the customer feedback string
+customer_feedback = """The product was good but could be improved. I especially appreciated the customer support and fast response times."""
+
+# Find the first occurrence of the word 'good'
+first_good = customer_feedback.find("good")  # Get the starting index of "good"
+
+# Find the last occurrence of the word 'good'
+last_good = customer_feedback.rfind("good")   # Get the starting index of the last occurrence of "good"
+
+# Find the first occurrence of the word 'improved'
+first_improved = customer_feedback.find("improved")  # Get the starting index of "improved"
+
+# Find the last occurrence of the word 'improved'
+last_improved = customer_feedback.rfind("improved")   # Get the starting index of the last occurrence of "improved"
+
+# Create tuples with (start, end) positions for each occurrence
+good_first_tuple = (first_good, first_good + len("good"))          # Tuple for first occurrence of "good"
+good_last_tuple = (last_good, last_good + len("good"))               # Tuple for last occurrence of "good"
+improved_first_tuple = (first_improved, first_improved + len("improved"))  # Tuple for first occurrence of "improved"
+improved_last_tuple = (last_improved, last_improved + len("improved"))       # Tuple for last occurrence of "improved"
+
+# Store the tuples in a list
+positions = [good_first_tuple, good_last_tuple, improved_first_tuple, improved_last_tuple]  # List containing all tuples
+
+# Print the list of tuples
+print(positions)
+
+# Output:
+#[(16, 20), (16, 20), (34, 42), (34, 42)]
 
 #######################################################################################################################################################
 
@@ -43,15 +94,46 @@ customer_feedback = """The product was good but could be improved. I especially 
 # 2. Customer Acquisition Cost (CAC): Calculate as (Total Marketing Cost / New Customers Acquired).
 # 3. Net Promoter Score (NPS): Calculate as (Promoters - Detractors) / Total Respondents * 100.
 # 4. Return on Investment (ROI): Calculate as (Net Gain from Investment / Investment Cost) * 100.
+# For Net Profit Margin, using net_profit = 7400 and revenue = 98558
+
+# Function to calculate Net Promoter Score (NPS): ((Promoters - Detractors) / Total Respondents) * 100
+# --- function definitions MUST come first ---
+def net_profit_margin(net_profit, revenue):
+    return (net_profit / revenue) * 100
+
+def customer_acquisition_cost(total_cost, new_customers):
+    return total_cost / new_customers
+
+def net_promoter_score(promoters, detractors, total):
+    return ((promoters - detractors) / total) * 100
+
+def return_on_investment(net_gain, cost):
+    return (net_gain / cost) * 100
+
+# --- then the calls ---
+if __name__ == "__main__":
+    print("Net Profit Margin:", net_profit_margin(7400, 98558))
+    print("CAC:", customer_acquisition_cost(740, 98))
+    print("NPS:", net_promoter_score(74, 9, 85))
+    print("ROI:", return_on_investment(7400, 9858))
 
 #######################################################################################################################################################
 
 # Question 4 - Data Analysis with Pandas
 # Using a dictionary sales_data, create a DataFrame from this dictionary, and display the DataFrame.
 # Write code to calculate and print the cumulative monthly sales up to each month.
+
 import pandas as pd
 
 sales_data = {'Month': ['Jan', 'Feb', 'Mar', 'Apr', 'May'], 'Sales': [200, 220, 210, 240, 250]}
+
+df = pd.DataFrame(sales_data) 
+print ("Monthly Sales Data")
+print (df)
+
+df['Cumulative Sales'] = df ['Sales'].cumsum()
+print ("Cumulative Monthly Sales:")
+print(df[['Month', 'Cumulative Sales']])
 
 #######################################################################################################################################################
 
@@ -61,6 +143,37 @@ sales_data = {'Month': ['Jan', 'Feb', 'Mar', 'Apr', 'May'], 'Sales': [200, 220, 
 
 # Price (£): 15, 18, 20, 22, 25, 27, 30
 # Demand (Units): 200, 180, 170, 160, 150, 140, 130
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+# Build the DataFrame
+df = pd.DataFrame({
+    'Price': [15, 18, 20, 22, 25, 27, 30],
+    'Demand': [200, 180, 170, 160, 150, 140, 130]
+})
+
+# Fit a linear regression model
+X = df[['Price']]
+y = df['Demand']
+model = LinearRegression().fit(X, y)
+
+# Predict demand at £26
+predicted_demand = model.predict([[26]])[0]
+print(f"Predicted demand at £26: {predicted_demand:.2f} units")
+
+# Scatter plot + regression line
+plt.figure()
+plt.scatter(df['Price'], df['Demand'])
+x_line = np.linspace(df['Price'].min(), df['Price'].max(), 100).reshape(-1,1)
+plt.plot(x_line, model.predict(x_line))
+plt.xlabel('Price (£)')
+plt.ylabel('Demand (Units)')
+plt.title('Price vs Demand with Regression Line')
+plt.show()
+
 
 #######################################################################################################################################################
 
