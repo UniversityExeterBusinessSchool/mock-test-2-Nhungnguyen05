@@ -183,6 +183,31 @@ prices = {'A': 50, 'B': 75, 'C': 'unknown', 'D': 30}
 
 # Write a function to calculate the total price of all items, handling any non-numeric values by skipping them.
 # Include error handling in your function and explain where and why it’s needed.
+# Define the dictionary with prices
+prices = {'A': 50, 'B': 75, 'C': 'unknown', 'D': 30}
+
+def calculate_total_price(price_dict):
+    """
+    Calculate the total price of all items in the dictionary.
+    
+    For each product, we try to convert the price to a float. If the value is not numeric,
+    a ValueError or TypeError will be raised. The try/except block catches these exceptions,
+    prints a message indicating that the non-numeric value is being skipped, and continues 
+    processing the remaining items.
+    """
+    total = 0  # Initialize total sum
+    for product, price in price_dict.items():
+        try:
+            # Attempt to convert the price to a float
+            total += float(price)
+        except (ValueError, TypeError):
+            # This block catches errors when price is non-numeric (e.g., 'unknown')
+            print(f"Skipping product '{product}' due to non-numeric price: {price}")
+    return total  # Return the cumulative total of valid prices
+
+# Call the function and display the result
+total_price = calculate_total_price(prices)
+print("Total Price:", total_price)
 
 #######################################################################################################################################################
 
@@ -192,13 +217,34 @@ prices = {'A': 50, 'B': 75, 'C': 'unknown', 'D': 30}
 # Add appropriate labels for the x-axis and y-axis, and include a title for the histogram.
 
 import matplotlib.pyplot as plt
-import random
+import numpy as np
+# Generate 50 random integers between 1 and 500
+random_numbers = np.random.randint(1, 501, size=50)
+
+# Create a histogram to visualize the distribution of the random numbers
+plt.hist(random_numbers, bins=10, edgecolor='black')
+
+# Add labels and title to the plot
+plt.xlabel('Random Numbers')
+plt.ylabel('Frequency')
+plt.title('Histogram of 50 Random Numbers between 1 and 500')
+
+# Display the histogram
+plt.show()
 
 #######################################################################################################################################################
 
 # Question 8 - List Comprehensions
 # Given a list of integers representing order quantities.
 quantities = [5, 12, 9, 15, 7, 10]
+# Use a list comprehension to double each quantity that is 10 or more.
+# For each quantity 'q' in the list, if q is greater than or equal to 10, multiply it by 2, otherwise keep it the same.
+doubled_quantities = [q * 2 if q >= 10 else q for q in quantities]
+# Print the original list of quantities
+print("Original quantities:", quantities)
+# Print the new list of quantities with doubled values where applicable
+print("Modified quantities:", doubled_quantities)
+
 
 # Use a list comprehension to create a new list that doubles each quantity that is 10 or more.
 # Print the original and the new lists.
@@ -208,7 +254,11 @@ quantities = [5, 12, 9, 15, 7, 10]
 # Question 9 - Dictionary Manipulation
 # Using the dictionary below, filter out the products with a rating of less than 4 and create a new dictionary with the remaining products.
 ratings = {'product_A': 4, 'product_B': 5, 'product_C': 3, 'product_D': 2, 'product_E': 5}
+# Use a dictionary comprehension to filter out products with a rating less than 4.
+filtered_ratings = {product: rating for product, rating in ratings.items() if rating >= 4}
 
+# Print the new dictionary with the remaining products.
+print("Filtered Products (rating >= 4):", filtered_ratings)
 #######################################################################################################################################################
 
 # Question 10 - Debugging and Correcting Code
@@ -222,5 +272,24 @@ print("The average is" + average)
 
 # Identify and correct the errors in the code.
 # Comment on each error and explain your fixes.
+
+# Define the list of values
+values = [10, 20, 30, 40, 50]
+
+# Initialize total to 0 to accumulate the sum of values
+total = 0
+
+# Loop through each number in the values list and add it to total
+for i in values:
+    total = total + i  # This correctly accumulates the total sum
+
+# Calculate the average by dividing the total sum by the number of values
+average = total / len(values)
+
+# Error: Cannot concatenate a string and a float directly.
+# Fix: Convert 'average' to a string or separate items using a comma in print.
+print("The average is " + str(average))
+#The average is 30.0
+
 
 #######################################################################################################################################################
